@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shreeshail Vitkar - Portfolio</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Anime.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="./style.css">
+    
+    <!-- Main JavaScript -->
+    <script type="module" src="./main.js"></script>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-brand">SV</div>
+        <ul class="sidebar-nav">
+            <li><a href="#home" class="sidebar-link active" title="Home"><i class="fas fa-home"></i></a></li>
+            <li><a href="#about" class="sidebar-link" title="About"><i class="fas fa-user"></i></a></li>
+            <li><a href="#services" class="sidebar-link" title="Services"><i class="fas fa-cogs"></i></a></li>
+            <li><a href="#skills" class="sidebar-link" title="Skills"><i class="fas fa-code"></i></a></li>
+            <li><a href="#blogs" class="sidebar-link" title="Blogs"><i class="fas fa-blog"></i></a></li>
+            <li><a href="#links" class="sidebar-link" title="Links"><i class="fas fa-link"></i></a></li>
+            <li><a href="#contact" class="sidebar-link" title="Contact"><i class="fas fa-envelope"></i></a></li>
+        </ul>
+        <button id="themeToggle" title="Toggle Theme">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+
+    <!-- Hero Section - Your Modified Design -->
+    <section id="home" class="hero-section">
+        <!-- Background particles -->
+        <div class="bg-particles" id="particles"></div>
+
+        <div class="hero-container">
+            <div class="name-container">
+                <svg class="name-svg" viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- First Name -->
+                    <text class="name-text" id="shreeshail" x="100" y="180" text-anchor="start">Shreeshail</text>
+                    
+                    <!-- Last Name -->
+                    <text class="name-text" id="vitkar" x="650" y="180" text-anchor="start">Vitkar</text>
+                    
+                    <!-- Writing cursor -->
+                    <circle class="writing-cursor" id="writingCursor" cx="100" cy="180" r="3" fill="#ffffff"/>
+                </svg>
+            </div>
+
+            <div class="hero-subtitle" id="subtitle">
+                Data Engineer & Automation Specialist
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+            <div style="color: rgba(255,255,255,0.6); font-size: 12px; letter-spacing: 2px;">SCROLL</div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="section-header">
+            <h2 class="section-title">About Me</h2>
+            <p class="section-subtitle">Self-driven technologist, data engineer, and automation enthusiast with expertise in Python, cloud-native architecture, and real-world API integrations</p>
+        </div>
+        
+        <div class="about-grid">
+            <div class="about-card">
+                <div class="about-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3 class="about-title">AI & Automation</h3>
+                <p class="about-description">Building AI-powered tools, automated backend systems, and lightweight AI agents using open models and serverless backends.</p>
+            </div>
+            
+            <div class="about-card">
+                <div class="about-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3 class="about-title">Cloud-Native Architecture</h3>
+                <p class="about-description">Specializing in AWS Lambda, S3, AppFlow, and event-based architectures for scalable, automated workflows.</p>
+            </div>
+            
+            <div class="about-card">
+                <div class="about-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3 class="about-title">API Integration</h3>
+                <p class="about-description">Expert in Google Drive API, WooCommerce REST, Microsoft Dynamics Web API, and webhook-first automation.</p>
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" data-target="10">0</div>
+                <div class="stat-label">MVPs Built</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number" data-target="5">0</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number" data-target="3">0</div>
+                <div class="stat-label">Companies Founded</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number" data-target="100">0</div>
+                <div class="stat-label">Automated Workflows</div>
+            </div>
+        </div>
+        
+        <!-- GitHub Stats Section -->
+        <div class="github-stats-section">
+            <h3 class="github-stats-title">GitHub Activity</h3>
+            <div class="github-stats-grid">
+                <div class="github-stats-card">
+                    <h4>Top Programming Languages</h4>
+                    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=shreeshailaya&layout=compact&theme=radical" alt="Top Languages" class="github-stats-img">
+                </div>
+                <div class="github-stats-card">
+                    <h4>GitHub Statistics</h4>
+                    <img src="https://github-readme-stats.vercel.app/api?username=shreeshailaya&show_icons=true&theme=radical&show=reviews,discussions_started,discussions_answered,prs_merged,prs_merged_percentage&rank_icon=github" alt="GitHub Stats" class="github-stats-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="section-header">
+            <h2 class="section-title">Services</h2>
+            <p class="section-subtitle">We help individuals, startups, and small businesses turn ideas into reality with smart technology, automation, and design</p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Product Engineering & MVP Development</h3>
+                    <p class="service-description">From idea to launch – fast and focused. We help you transform your concepts into real, working software. Whether it's a prototype, proof of concept, or a complete MVP, we build scalable, clean, and cost-efficient products that you can test with real users quickly.</p>
+                    <div class="service-ideal">
+                        <span class="ideal-tag">✅ Ideal for: Startups, entrepreneurs, SaaS builders</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">AI & Automation Workflows</h3>
+                    <p class="service-description">Automate repetitive tasks and scale smarter. We design intelligent workflows using tools like Python, N8N, and custom APIs to automate your business logic — from lead capture to customer support and document processing. Integrate your tools, reduce manual work, and grow without growing overhead.</p>
+                    <div class="service-ideal">
+                        <span class="ideal-tag">✅ Ideal for: Agencies, digital sellers, B2B systems</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Custom Web Design & Development</h3>
+                    <p class="service-description">Beautiful. Functional. Optimized. We build modern, responsive websites tailored to your brand — whether it's a portfolio, landing page, or business website. All designs are mobile-friendly, SEO-ready, and lightning-fast.</p>
+                    <div class="service-ideal">
+                        <span class="ideal-tag">✅ Ideal for: Personal brands, businesses, consultants</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-sms"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Bulk SMS Services</h3>
+                    <p class="service-description">Reach thousands, instantly. Send promotional, transactional, or OTP SMS with our reliable bulk messaging solution. We support integration with your existing CRM, website, or backend systems.</p>
+                    <div class="service-ideal">
+                        <span class="ideal-tag">✅ Ideal for: Schools, retailers, logistics</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Web Hosting</h3>
+                    <p class="service-description">Reliable and secure hosting to keep you online. We offer affordable, fast, and secure web hosting packages for websites, web apps, and landing pages — with full support and uptime monitoring.</p>
+                    <div class="service-ideal">
+                        <span class="ideal-tag">✅ Ideal for: WordPress sites, custom sites, landing pages</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">N8N Workflow Hosting</h3>
+                    <p class="service-description">Self-hosted N8N for full control of your automations. We provide optimized N8N hosting so you can create powerful no-code/low-code automation workflows — without platform limits. Full setup, maintenance, and custom module support included.</p>
+                    <div class="service-ideal">
+                        <span class="ideal-tag">✅ Ideal for: Automation lovers, technical founders</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Email Hosting</h3>
+                    <p class="service-description">Branded email that works. Get professional email addresses like you@yourdomain.com with our secure and easy-to-manage email hosting. Supports webmail, IMAP/SMTP, and spam protection.</p>
+                    <div class="service-ideal">
+                        <span class="ideal-tag">✅ Ideal for: Businesses, freelancers, teams</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fab fa-wordpress"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">WordPress Design & Development</h3>
+                    <p class="service-description">Full control. Endless possibilities. We specialize in creating and customizing WordPress websites — including custom plugin development, custom theme development, advanced theme/plugin customization, and performance optimization and integrations.</p>
+                    <div class="service-ideal">
+                        <span class="ideal-tag">✅ Ideal for: Self-hosted CMS solutions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="section-header">
+            <h2 class="section-title">Technical Skills</h2>
+            <p class="section-subtitle">Technologies and tools I work with</p>
+        </div>
+        
+        <div class="skills-grid">
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fab fa-python"></i>
+                </div>
+                <div class="skill-name">Python</div>
+                <div class="skill-level">Expert</div>
+            </div>
+            
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fab fa-aws"></i>
+                </div>
+                <div class="skill-name">AWS</div>
+                <div class="skill-level">Advanced</div>
+            </div>
+            
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="skill-name">Data Engineering</div>
+                <div class="skill-level">Advanced</div>
+            </div>
+            
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="skill-name">AI/ML</div>
+                <div class="skill-level">Advanced</div>
+            </div>
+            
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="skill-name">Automation</div>
+                <div class="skill-level">Expert</div>
+            </div>
+            
+            <div class="skill-item">
+                <div class="skill-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <div class="skill-name">Cloud Native</div>
+                <div class="skill-level">Advanced</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blogs Section -->
+    <section id="blogs" class="section">
+        <div class="section-header">
+            <h2 class="section-title">Latest Blogs</h2>
+            <p class="section-subtitle">Thoughts on technology, automation, and building scalable solutions</p>
+        </div>
+        
+        <div class="blogs-container">
+            <div class="blog-cards-grid">
+                <a href="https://github-readme-medium-recent-article.vercel.app/medium/@shreeshail/0" target="_blank" class="blog-card">
+                    <img src="https://github-readme-medium-recent-article.vercel.app/medium/@shreeshail/0" alt="Recent Article 0" class="blog-card-img">
+                </a>
+                
+                <a href="https://github-readme-medium-recent-article.vercel.app/medium/@shreeshail/1" target="_blank" class="blog-card">
+                    <img src="https://github-readme-medium-recent-article.vercel.app/medium/@shreeshail/1" alt="Recent Article 1" class="blog-card-img">
+                </a>
+                
+                <a href="https://github-readme-medium-recent-article.vercel.app/medium/@shreeshail/2" target="_blank" class="blog-card">
+                    <img src="https://github-readme-medium-recent-article.vercel.app/medium/@shreeshail/2" alt="Recent Article 2" class="blog-card-img">
+                </a>
+            </div>
+            
+            <div class="blogs-cta">
+                <a href="https://medium.com/@shreeshail" target="_blank" class="read-all-blogs-btn">
+                    <i class="fas fa-external-link-alt"></i>
+                    Read All Blogs on Medium
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Useful Links Section -->
+    <section id="links" class="section">
+        <div class="section-header">
+            <h2 class="section-title">Useful Links</h2>
+            <p class="section-subtitle">Quick access to our projects and services</p>
+        </div>
+        
+        <div class="links-grid">
+            <a href="https://aganiai.com/" target="_blank" class="link-card">
+                <div class="link-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="link-content">
+                    <h3 class="link-title">Agani AI</h3>
+                    <p class="link-description">AI Product Studio - Creating lightweight AI tools and automations</p>
+                </div>
+            </a>
+            
+            <a href="https://email.linksinbio.in/" target="_blank" class="link-card">
+                <div class="link-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="link-content">
+                    <h3 class="link-title">Email Login</h3>
+                    <p class="link-description">Professional email hosting and management portal</p>
+                </div>
+            </a>
+            
+            <a href="http://sms.hishree.com/login" target="_blank" class="link-card">
+                <div class="link-icon">
+                    <i class="fas fa-sms"></i>
+                </div>
+                <div class="link-content">
+                    <h3 class="link-title">SMS Panel</h3>
+                    <p class="link-description">Bulk SMS services and messaging platform</p>
+                </div>
+            </a>
+            
+            <a href="https://publicmart.in/" target="_blank" class="link-card">
+                <div class="link-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="link-content">
+                    <h3 class="link-title">PublicMart E-Comm Store</h3>
+                    <p class="link-description">Digital marketplace for creative products and digital packs</p>
+                </div>
+            </a>
+            
+                                    <a href="https://github.com/shreeshailaya/C-DAC-Notes" target="_blank" class="link-card">
+                            <div class="link-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="link-content">
+                                <h3 class="link-title">CDAC Notes</h3>
+                                <p class="link-description">Comprehensive study materials and notes for CDAC courses</p>
+                            </div>
+                        </a>
+                        
+                        <a href="https://linksinbio.in/jobs/" target="_blank" class="link-card">
+                            <div class="link-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div class="link-content">
+                                <h3 class="link-title">Job Portal</h3>
+                                <p class="link-description">Find and post job opportunities in technology and development</p>
+                            </div>
+                        </a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="section-header">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Let's work together on your next project</p>
+        </div>
+        
+        <div class="contact-grid">
+                            <div class="contact-info">
+                    <h3 style="margin-bottom: 2rem; color: var(--accent-color);">Contact Information</h3>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>shree@linksinbio.in</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Website</h4>
+                            <p>HelloShree.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Company</h4>
+                            <p>Vitkar Technology</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                    <a href="https://www.linkedin.com/in/shreeshailaya/" class="social-link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.instagram.com/shree_vitkar/" class="social-link" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://github.com/shreeshailaya" class="social-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://x.com/shree_vitkar" class="social-link" target="_blank">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <h3 style="margin-bottom: 2rem; color: var(--accent-color);">Send Message</h3>
+                
+                                <form id="contactForm" class="contact-form" novalidate>
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="Your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea id="message" name="message" class="form-textarea" placeholder="Your message" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        <span id="submitText">Send Message</span>
+                    </button>
+                </form>
+                
+                <!-- Success Message -->
+                <div id="successMessage" class="success-message" style="display: none;">
+                    <div class="success-content">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Message Sent Successfully!</h4>
+                        <p>Thank you for reaching out. I'll get back to you soon!</p>
+                    </div>
+                </div>
+                
+                <!-- Error Message -->
+                <div id="errorMessage" class="error-message" style="display: none;">
+                    <div class="error-content">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h4>Oops! Something went wrong</h4>
+                        <p id="errorText">Please try again later or contact me directly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Create background particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = window.innerWidth > 768 ? 15 : 8;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            const shreeshailText = document.getElementById('shreeshail');
+            const vitkarText = document.getElementById('vitkar');
+            const writingCursor = document.getElementById('writingCursor');
+            const subtitle = document.getElementById('subtitle');
+            
+            // Setup handwriting animation
+            function setupTextAnimation(textElement) {
+                const bbox = textElement.getBBox();
+                const pathLength = bbox.width * 2.5; // Adjusted for cursive complexity
+                textElement.style.strokeDasharray = pathLength;
+                textElement.style.strokeDashoffset = pathLength;
+                return pathLength;
+            }
+            
+            const shreeshailLength = setupTextAnimation(shreeshailText);
+            const vitkarLength = setupTextAnimation(vitkarText);
+            
+            // Hide writing cursor initially
+            writingCursor.style.opacity = '0';
+            
+            // Start name animation after typewriter completes
+            setTimeout(() => {
+                
+                // Show writing cursor
+                writingCursor.style.opacity = '1';
+                
+                // Animate first name
+                anime({
+                    targets: shreeshailText,
+                    strokeDashoffset: [shreeshailLength, 0],
+                    duration: 3000,
+                    easing: 'easeInOutQuart',
+                    update: function(anim) {
+                        const progress = anim.progress / 100;
+                        const bbox = shreeshailText.getBBox();
+                        writingCursor.setAttribute('cx', 100 + (bbox.width * progress));
+                    },
+                    complete: function() {
+                        // Move cursor to start of last name
+                        anime({
+                            targets: writingCursor,
+                            cx: 650,
+                            duration: 400,
+                            easing: 'easeInOutQuad',
+                            complete: function() {
+                                // Animate last name
+                                anime({
+                                    targets: vitkarText,
+                                    strokeDashoffset: [vitkarLength, 0],
+                                    duration: 2500,
+                                    easing: 'easeInOutQuart',
+                                    update: function(anim) {
+                                        const progress = anim.progress / 100;
+                                        const bbox = vitkarText.getBBox();
+                                        writingCursor.setAttribute('cx', 650 + (bbox.width * progress));
+                                    },
+                                    complete: function() {
+                                        // Hide writing cursor
+                                        writingCursor.style.opacity = '0';
+                                        
+                                        // Fill animation
+                                        anime({
+                                            targets: [shreeshailText, vitkarText],
+                                            fill: '#ffffff',
+                                            duration: 1500,
+                                            easing: 'easeInOutQuad',
+                                            delay: 300
+                                        });
+                                        
+                                        // Show subtitle
+                                        anime({
+                                            targets: subtitle,
+                                            opacity: [0, 1],
+                                            translateY: [30, 0],
+                                            duration: 1000,
+                                            easing: 'easeOutExpo',
+                                            delay: 800
+                                        });
+                                        
+                                        // Floating animation
+                                        setTimeout(() => {
+                                            anime({
+                                                targets: '.name-svg',
+                                                translateY: [-2, 2],
+                                                duration: 5000,
+                                                direction: 'alternate',
+                                                loop: true,
+                                                easing: 'easeInOutSine'
+                                            });
+                                        }, 2000);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }, 1000);
+        });
+        
+        // Interactive sparkle effects
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', function(e) {
+                if (Math.random() > 0.98) {
+                    createSparkle(e.clientX, e.clientY);
+                }
+            });
+            
+            function createSparkle(x, y) {
+                const sparkle = document.createElement('div');
+                sparkle.style.position = 'fixed';
+                sparkle.style.left = x + 'px';
+                sparkle.style.top = y + 'px';
+                sparkle.style.width = '2px';
+                sparkle.style.height = '2px';
+                sparkle.style.background = 'white';
+                sparkle.style.borderRadius = '50%';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.zIndex = '1000';
+                sparkle.style.boxShadow = '0 0 6px rgba(255, 255, 255, 0.8)';
+                
+                document.body.appendChild(sparkle);
+                
+                anime({
+                    targets: sparkle,
+                    scale: [0, 2, 0],
+                    opacity: [1, 0],
+                    duration: 1000,
+                    easing: 'easeOutQuart',
+                    complete: function() {
+                        if (document.body.contains(sparkle)) {
+                            document.body.removeChild(sparkle);
+                        }
+                    }
+                });
+            }
+        }
+
+        // Navigation functionality
+        const navLinks = document.querySelectorAll('.sidebar-link');
+        const sections = document.querySelectorAll('.section');
+
+        // Smooth scrolling for navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Update active navigation based on scroll position
+        window.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('scroll', () => {
+                const scrollPos = window.scrollY + window.innerHeight / 3;
+                
+                // Get all sections including hero section
+                const allSections = document.querySelectorAll('section[id]');
+                let currentSection = '';
+                
+                allSections.forEach((section) => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                        currentSection = sectionId;
+                    }
+                });
+                
+                // Update active navigation link
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentSection}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        let isDarkTheme = true;
+
+        themeToggle.addEventListener('click', () => {
+            isDarkTheme = !isDarkTheme;
+            document.documentElement.setAttribute('data-theme', isDarkTheme ? 'dark' : 'light');
+            
+            // Update theme toggle icon
+            const icon = themeToggle.querySelector('i');
+            if (isDarkTheme) {
+                icon.className = 'fas fa-moon';
+            } else {
+                icon.className = 'fas fa-sun';
+            }
+
+            // Animate theme toggle button
+            anime({
+                targets: themeToggle,
+                rotateY: [0, 180],
+                duration: 400,
+                easing: 'easeInOutQuad'
+            });
+        });
+
+        // Animate statistics
+        const statNumbers = document.querySelectorAll('.stat-number');
+        statNumbers.forEach(stat => {
+            const target = parseInt(stat.getAttribute('data-target'));
+            
+            anime({
+                targets: stat,
+                innerHTML: [0, target],
+                round: 1,
+                duration: 2000,
+                easing: 'easeOutExpo',
+                delay: anime.stagger(200)
+            });
+        });
+
+        // Animate service cards
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach((card, index) => {
+            anime({
+                targets: card,
+                translateY: [50, 0],
+                opacity: [0, 1],
+                duration: 800,
+                delay: index * 200,
+                easing: 'easeOutQuad'
+            });
+        });
+
+        // Animate link cards
+        const linkCards = document.querySelectorAll('.link-card');
+        linkCards.forEach((card, index) => {
+            anime({
+                targets: card,
+                translateY: [50, 0],
+                opacity: [0, 1],
+                duration: 800,
+                delay: index * 200,
+                easing: 'easeOutQuad'
+            });
+        });
+
+        // Intersection Observer for section animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all sections for fade-in animation
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Note: Form handling is managed by main.js
+        // No inline form handlers to avoid conflicts
+
+    </script>
+
+    
+</body>
+</html> 

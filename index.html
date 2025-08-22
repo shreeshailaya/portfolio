@@ -68,7 +68,6 @@
         <!-- Scroll indicator -->
         <div class="scroll-indicator">
             <div class="scroll-arrow"></div>
-            <div style="color: rgba(255,255,255,0.6); font-size: 12px; letter-spacing: 2px;">SCROLL</div>
         </div>
     </section>
 
@@ -540,105 +539,114 @@
 
         // Wait for DOM to load
         document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            
-            const shreeshailText = document.getElementById('shreeshail');
-            const vitkarText = document.getElementById('vitkar');
-            const writingCursor = document.getElementById('writingCursor');
-            const subtitle = document.getElementById('subtitle');
-            
-            // Setup handwriting animation
-            function setupTextAnimation(textElement) {
-                const bbox = textElement.getBBox();
-                const pathLength = bbox.width * 2.5; // Adjusted for cursive complexity
-                textElement.style.strokeDasharray = pathLength;
-                textElement.style.strokeDashoffset = pathLength;
-                return pathLength;
-            }
-            
-            const shreeshailLength = setupTextAnimation(shreeshailText);
-            const vitkarLength = setupTextAnimation(vitkarText);
-            
-            // Hide writing cursor initially
-            writingCursor.style.opacity = '0';
-            
-            // Start name animation after typewriter completes
+            // Ensure all elements are loaded before starting animations
             setTimeout(() => {
+                createParticles();
                 
-                // Show writing cursor
-                writingCursor.style.opacity = '1';
+                const shreeshailText = document.getElementById('shreeshail');
+                const vitkarText = document.getElementById('vitkar');
+                const writingCursor = document.getElementById('writingCursor');
+                const subtitle = document.getElementById('subtitle');
                 
-                // Animate first name
-                anime({
-                    targets: shreeshailText,
-                    strokeDashoffset: [shreeshailLength, 0],
-                    duration: 1200,
-                    easing: 'easeInOutQuart',
-                    update: function(anim) {
-                        const progress = anim.progress / 100;
-                        const bbox = shreeshailText.getBBox();
-                        writingCursor.setAttribute('cx', 50 + (bbox.width * progress));
-                    },
-                    complete: function() {
-                        // Move cursor to start of last name
-                        anime({
-                            targets: writingCursor,
-                            cx: 350,
-                            duration: 200,
-                            easing: 'easeInOutQuad',
-                            complete: function() {
-                                // Animate last name
-                                anime({
-                                    targets: vitkarText,
-                                    strokeDashoffset: [vitkarLength, 0],
-                                    duration: 1000,
-                                    easing: 'easeInOutQuart',
-                                    update: function(anim) {
-                                        const progress = anim.progress / 100;
-                                        const bbox = vitkarText.getBBox();
-                                        writingCursor.setAttribute('cx', 350 + (bbox.width * progress));
-                                    },
-                                    complete: function() {
-                                        // Hide writing cursor
-                                        writingCursor.style.opacity = '0';
-                                        
-                                        // Fill animation
-                                        anime({
-                                            targets: [shreeshailText, vitkarText],
-                                            fill: '#ffffff',
-                                            duration: 800,
-                                            easing: 'easeInOutQuad',
-                                            delay: 150
-                                        });
-                                        
-                                        // Show subtitle
-                                        anime({
-                                            targets: subtitle,
-                                            opacity: [0, 1],
-                                            translateY: [30, 0],
-                                            duration: 600,
-                                            easing: 'easeOutExpo',
-                                            delay: 400
-                                        });
-                                        
-                                        // Floating animation
-                                        setTimeout(() => {
+                // Check if all elements exist before proceeding
+                if (!shreeshailText || !vitkarText || !writingCursor || !subtitle) {
+                    console.error('Required animation elements not found');
+                    return;
+                }
+                
+                // Setup handwriting animation
+                function setupTextAnimation(textElement) {
+                    const bbox = textElement.getBBox();
+                    const pathLength = bbox.width * 2.5; // Adjusted for cursive complexity
+                    textElement.style.strokeDasharray = pathLength;
+                    textElement.style.strokeDashoffset = pathLength;
+                    return pathLength;
+                }
+                
+                const shreeshailLength = setupTextAnimation(shreeshailText);
+                const vitkarLength = setupTextAnimation(vitkarText);
+                
+                // Hide writing cursor initially
+                writingCursor.style.opacity = '0';
+                
+                // Start name animation after a short delay
+                setTimeout(() => {
+                    
+                    // Show writing cursor
+                    writingCursor.style.opacity = '1';
+                    
+                    // Animate first name
+                    anime({
+                        targets: shreeshailText,
+                        strokeDashoffset: [shreeshailLength, 0],
+                        duration: 1200,
+                        easing: 'easeInOutQuart',
+                        update: function(anim) {
+                            const progress = anim.progress / 100;
+                            const bbox = shreeshailText.getBBox();
+                            writingCursor.setAttribute('cx', 50 + (bbox.width * progress));
+                        },
+                        complete: function() {
+                            // Move cursor to start of last name
+                            anime({
+                                targets: writingCursor,
+                                cx: 350,
+                                duration: 200,
+                                easing: 'easeInOutQuad',
+                                complete: function() {
+                                    // Animate last name
+                                    anime({
+                                        targets: vitkarText,
+                                        strokeDashoffset: [vitkarLength, 0],
+                                        duration: 1000,
+                                        easing: 'easeInOutQuart',
+                                        update: function(anim) {
+                                            const progress = anim.progress / 100;
+                                            const bbox = vitkarText.getBBox();
+                                            writingCursor.setAttribute('cx', 350 + (bbox.width * progress));
+                                        },
+                                        complete: function() {
+                                            // Hide writing cursor
+                                            writingCursor.style.opacity = '0';
+                                            
+                                            // Fill animation
                                             anime({
-                                                targets: '.name-svg',
-                                                translateY: [-2, 2],
-                                                duration: 3000,
-                                                direction: 'alternate',
-                                                loop: true,
-                                                easing: 'easeInOutSine'
+                                                targets: [shreeshailText, vitkarText],
+                                                fill: '#ffffff',
+                                                duration: 800,
+                                                easing: 'easeInOutQuad',
+                                                delay: 150
                                             });
-                                        }, 1000);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            }, 500);
+                                            
+                                            // Show subtitle
+                                            anime({
+                                                targets: subtitle,
+                                                opacity: [0, 1],
+                                                translateY: [30, 0],
+                                                duration: 600,
+                                                easing: 'easeOutExpo',
+                                                delay: 400
+                                            });
+                                            
+                                            // Floating animation
+                                            setTimeout(() => {
+                                                anime({
+                                                    targets: '.name-svg',
+                                                    translateY: [-2, 2],
+                                                    duration: 3000,
+                                                    direction: 'alternate',
+                                                    loop: true,
+                                                    easing: 'easeInOutSine'
+                                                });
+                                            }, 1000);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }, 500);
+            }, 100); // Additional delay to ensure everything is loaded
         });
         
         // Interactive sparkle effects
@@ -729,11 +737,15 @@
 
         // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
-        let isDarkTheme = true;
+        let isDarkTheme = true; // Start with dark theme (correct)
+
+        // Set initial theme
+        document.documentElement.setAttribute('data-theme', 'dark');
 
         themeToggle.addEventListener('click', () => {
             isDarkTheme = !isDarkTheme;
-            document.documentElement.setAttribute('data-theme', isDarkTheme ? 'dark' : 'light');
+            const newTheme = isDarkTheme ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
             
             // Update theme toggle icon
             const icon = themeToggle.querySelector('i');
@@ -793,7 +805,7 @@
             });
         });
 
-        // Intersection Observer for section animations
+        // Intersection Observer for section animations with timeout protection
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -802,7 +814,15 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    // Add timeout protection to prevent hanging
+                    const timeoutId = setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, 100); // Small delay to prevent blocking
+                    
+                    // Clean up timeout if element is no longer intersecting
+                    if (!entry.isIntersecting) {
+                        clearTimeout(timeoutId);
+                    }
                 }
             });
         }, observerOptions);
@@ -811,6 +831,11 @@
         sections.forEach(section => {
             observer.observe(section);
         });
+        
+        // Cleanup observer after 30 seconds to prevent memory leaks
+        setTimeout(() => {
+            observer.disconnect();
+        }, 30000);
 
         // Note: Form handling is managed by main.js
         // No inline form handlers to avoid conflicts

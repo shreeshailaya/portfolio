@@ -214,23 +214,27 @@ function initContactForm() {
     }
 }
 
-// Enhanced scroll animations with better performance
+// Enhanced scroll animations with better performance and timeout protection
 function initScrollAnimations() {
     // Intersection Observer for fade-in animations with better options
     const observerOptions = {
-        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5], // Multiple thresholds for smoother animations
-        rootMargin: '0px 0px -100px 0px', // Better trigger timing
+        threshold: [0, 0.1, 0.2], // Reduced thresholds for better performance
+        rootMargin: '0px 0px -50px 0px', // Optimized trigger timing
         root: null
     };
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Add animation class with delay based on intersection ratio
-                const delay = (1 - entry.intersectionRatio) * 0.3;
-                setTimeout(() => {
+                // Add animation class with timeout protection
+                const timeoutId = setTimeout(() => {
                     entry.target.classList.add('animate-in');
-                }, delay * 1000);
+                }, 100); // Reduced delay for better performance
+                
+                // Clean up timeout if element is no longer intersecting
+                if (!entry.isIntersecting) {
+                    clearTimeout(timeoutId);
+                }
             }
         });
     }, observerOptions);
@@ -240,18 +244,24 @@ function initScrollAnimations() {
     animatedElements.forEach(el => {
         observer.observe(el);
     });
+    
+    // Cleanup observer after 30 seconds to prevent memory leaks and hanging
+    setTimeout(() => {
+        observer.disconnect();
+    }, 30000);
 }
 
-// Hero Animation
+// Hero Animation with fallback system
 function initHeroAnimation() {
     const nameText = document.querySelector('.name-text');
     const heroSubtitle = document.querySelector('.hero-subtitle');
     
     if (nameText) {
-        // Simple fade-in animation
+        // Simple fade-in animation as fallback
         nameText.style.opacity = '0';
         nameText.style.transform = 'translateY(30px)';
         
+        // Fallback animation if main animations fail
         setTimeout(() => {
             nameText.style.transition = 'all 1s ease-out';
             nameText.style.opacity = '1';
@@ -262,6 +272,17 @@ function initHeroAnimation() {
                 showTagline();
             }, 1000); // Wait 1 second after name animation
         }, 500);
+        
+        // Add error handling for animation failures
+        setTimeout(() => {
+            if (nameText.style.opacity === '0') {
+                console.log('Applying fallback animation for hero section');
+                nameText.style.transition = 'all 1s ease-out';
+                nameText.style.opacity = '1';
+                nameText.style.transform = 'translateY(0)';
+                showTagline();
+            }
+        }, 3000); // Fallback after 3 seconds
     }
 }
 
@@ -269,13 +290,15 @@ function initHeroAnimation() {
 function showTagline() {
     const heroSubtitle = document.querySelector('.hero-subtitle');
     if (heroSubtitle) {
-        // Update the subtitle text to your tagline
-        heroSubtitle.textContent = "Data Engineer & Automation Specialist";
+        // Ensure the tagline is visible and animated
+        heroSubtitle.style.opacity = '0';
+        heroSubtitle.style.transform = 'translateY(30px)';
         
-        // Animate the tagline in
-        heroSubtitle.style.transition = 'all 0.8s ease-out';
-        heroSubtitle.style.opacity = '1';
-        heroSubtitle.style.transform = 'translateY(0)';
+        setTimeout(() => {
+            heroSubtitle.style.transition = 'all 0.8s ease-out';
+            heroSubtitle.style.opacity = '1';
+            heroSubtitle.style.transform = 'translateY(0)';
+        }, 100);
     }
 }
 

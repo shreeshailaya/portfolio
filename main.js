@@ -1,4 +1,30 @@
 import HorizontalNav from './horizontal-nav.js';
+import Lenis from 'lenis';
+
+// Initialize Lenis smooth scrolling with enhanced configuration
+const lenis = new Lenis({
+    duration: 0.8,                    // Faster, more responsive scrolling
+    easing: (t) => 1 - Math.pow(1 - t, 3), // Smooth cubic-bezier easing
+    direction: 'vertical',
+    gestureDirection: 'vertical',
+    smooth: true,
+    mouseMultiplier: 0.8,            // Reduced for smoother mouse scrolling
+    smoothTouch: true,                // Enable smooth touch for mobile
+    touchMultiplier: 1.5,            // Optimized touch sensitivity
+    infinite: false,
+    lerp: 0.1,                       // Linear interpolation for smoother movement
+    wheelMultiplier: 0.8,            // Smoother wheel scrolling
+    syncTouch: true,                 // Sync touch and mouse scrolling
+    syncTouchLerp: 0.1,             // Touch interpolation
+    touchInertiaMultiplier: 40,      // Touch inertia for natural feel
+});
+
+// Enhanced RAF for Lenis with better performance
+function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
 
 // Initialize horizontal navigation
 let horizontalNav;
@@ -35,14 +61,7 @@ function initHorizontalNavigation() {
                 { label: "Blogs", href: "#blogs", icon: "fas fa-blog" },
                 { label: "Links", href: "#links", icon: "fas fa-link" },
                 { label: "Contact", href: "#contact", icon: "fas fa-envelope" }
-            ],
-            particleCount: 15,
-            particleDistances: [90, 10],
-            particleR: 100,
-            initialActiveIndex: 0,
-            animationTime: 600,
-            timeVariance: 300,
-            colors: [1, 2, 3, 1, 2, 3, 1, 4]
+            ]
         });
         
         // Hide the old sidebar
@@ -195,22 +214,27 @@ function initContactForm() {
     }
 }
 
-// Scroll Animations
+// Enhanced scroll animations with better performance
 function initScrollAnimations() {
-    // Intersection Observer for fade-in animations
+    // Intersection Observer for fade-in animations with better options
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5], // Multiple thresholds for smoother animations
+        rootMargin: '0px 0px -100px 0px', // Better trigger timing
+        root: null
     };
-
+    
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
+                // Add animation class with delay based on intersection ratio
+                const delay = (1 - entry.intersectionRatio) * 0.3;
+                setTimeout(() => {
+                    entry.target.classList.add('animate-in');
+                }, delay * 1000);
             }
         });
     }, observerOptions);
-
+    
     // Observe all sections and cards
     const animatedElements = document.querySelectorAll('.section, .about-card, .project-card, .service-card, .skill-item, .blog-card');
     animatedElements.forEach(el => {
@@ -232,39 +256,54 @@ function initHeroAnimation() {
             nameText.style.transition = 'all 1s ease-out';
             nameText.style.opacity = '1';
             nameText.style.transform = 'translateY(0)';
+            
+            // After name animation completes, show the tagline
+            setTimeout(() => {
+                showTagline();
+            }, 1000); // Wait 1 second after name animation
         }, 500);
-    }
-    
-    if (heroSubtitle) {
-        heroSubtitle.style.opacity = '0';
-        heroSubtitle.style.transform = 'translateY(20px)';
-        
-        setTimeout(() => {
-            heroSubtitle.style.transition = 'all 0.8s ease-out 0.3s';
-            heroSubtitle.style.opacity = '1';
-            heroSubtitle.style.transform = 'translateY(0)';
-        }, 800);
     }
 }
 
-// Update active navigation based on scroll position
-window.addEventListener('scroll', () => {
-    if (horizontalNav) {
-        const scrollPos = window.scrollY + window.innerHeight / 3;
-        const sections = document.querySelectorAll('section[id]');
-        let currentSection = '';
+// Show tagline after name animation
+function showTagline() {
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    if (heroSubtitle) {
+        // Update the subtitle text to your tagline
+        heroSubtitle.textContent = "Data Engineer & Automation Specialist";
         
-        sections.forEach((section) => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                currentSection = sectionId;
-            }
-        });
+        // Animate the tagline in
+        heroSubtitle.style.transition = 'all 0.8s ease-out';
+        heroSubtitle.style.opacity = '1';
+        heroSubtitle.style.transform = 'translateY(0)';
+    }
+}
+
+// Enhanced navigation sync with better scroll detection
+function updateActiveNavigation(scrollY) {
+    if (!horizontalNav) return;
+    
+    const sections = document.querySelectorAll('section[id]');
+    let currentSection = '';
+    let minDistance = Infinity;
+    
+    // Find the closest section to current scroll position
+    sections.forEach((section) => {
+        const sectionTop = section.offsetTop - 150; // Better offset for detection
+        const sectionBottom = sectionTop + section.offsetHeight;
+        const sectionCenter = sectionTop + (section.offsetHeight / 2);
         
-        // Find the index of the current section
+        // Calculate distance to section center
+        const distance = Math.abs(scrollY - sectionCenter);
+        
+        if (scrollY >= sectionTop && scrollY < sectionBottom && distance < minDistance) {
+            minDistance = distance;
+            currentSection = section.getAttribute('id');
+        }
+    });
+    
+    // Update active navigation with smooth transition
+    if (currentSection) {
         const navItems = horizontalNav.options.items;
         const currentIndex = navItems.findIndex(item => item.href === `#${currentSection}`);
         
@@ -272,15 +311,150 @@ window.addEventListener('scroll', () => {
             horizontalNav.setActive(currentIndex);
         }
     }
+}
+
+// Synchronize navigation with scroll position using Lenis
+lenis.on('scroll', (e) => {
+    updateActiveNavigation(e.scroll);
 });
 
-// Add CSS for animations
-const style = document.createElement('style');
-style.textContent = `
+// Add smooth scroll behavior to all internal links
+document.addEventListener('DOMContentLoaded', () => {
+    // Smooth scroll for all internal links
+    const internalLinks = document.querySelectorAll('a[href^="#"]');
+    
+    internalLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            
+            if (targetSection) {
+                lenis.scrollTo(targetSection, {
+                    offset: -70, // Account for fixed navigation
+                    duration: 1.2,
+                    easing: (t) => 1 - Math.pow(1 - t, 3), // Smooth cubic easing
+                    immediate: false
+                });
+            }
+        });
+    });
+    
+    // Enhanced smooth scroll for navigation links
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            
+            if (targetSection) {
+                lenis.scrollTo(targetSection, {
+                    offset: -70, // Account for fixed navigation
+                    duration: 1.2,
+                    easing: (t) => 1 - Math.pow(1 - t, 3), // Smooth cubic easing
+                    immediate: false
+                });
+            }
+        });
+    });
+    
+    // Add smooth scroll to top functionality
+    const scrollToTopBtn = document.createElement('button');
+    scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    scrollToTopBtn.className = 'scroll-to-top-btn';
+    scrollToTopBtn.title = 'Scroll to top';
+    document.body.appendChild(scrollToTopBtn);
+    
+    // Show/hide scroll to top button
+    lenis.on('scroll', (e) => {
+        if (e.scroll > 500) {
+            scrollToTopBtn.classList.add('visible');
+        } else {
+            scrollToTopBtn.classList.remove('visible');
+        }
+    });
+    
+    // Scroll to top functionality
+    scrollToTopBtn.addEventListener('click', () => {
+        lenis.scrollTo(0, {
+            duration: 1.5,
+            easing: (t) => 1 - Math.pow(1 - t, 3),
+            immediate: false
+        });
+    });
+    
+    // Add smooth scroll for any element with data-smooth-scroll attribute
+    const smoothScrollElements = document.querySelectorAll('[data-smooth-scroll]');
+    smoothScrollElements.forEach(element => {
+        element.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = element.getAttribute('data-smooth-scroll');
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                lenis.scrollTo(targetElement, {
+                    offset: -70,
+                    duration: 1.2,
+                    easing: (t) => 1 - Math.pow(1 - t, 3),
+                    immediate: false
+                });
+            }
+        });
+    });
+});
+
+// Add CSS for enhanced smooth scrolling and scroll-to-top button
+const enhancedStyle = document.createElement('style');
+enhancedStyle.textContent = `
+    /* Enhanced smooth scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        overflow-x: hidden;
+    }
+    
+    /* Scroll to top button */
+    .scroll-to-top-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(45deg, var(--accent-color), #00bcd4);
+        color: #000;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.2rem;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+        box-shadow: 0 4px 20px rgba(100, 255, 218, 0.3);
+    }
+    
+    .scroll-to-top-btn.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .scroll-to-top-btn:hover {
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 8px 30px rgba(100, 255, 218, 0.4);
+    }
+    
+    /* Enhanced animation classes */
     .section, .about-card, .project-card, .service-card, .skill-item, .blog-card {
         opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.8s ease-out;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform, opacity;
     }
     
     .section.animate-in, .about-card.animate-in, .project-card.animate-in, 
@@ -289,6 +463,7 @@ style.textContent = `
         transform: translateY(0);
     }
     
+    /* Staggered animations with better timing */
     .about-card:nth-child(1) { transition-delay: 0.1s; }
     .about-card:nth-child(2) { transition-delay: 0.2s; }
     .about-card:nth-child(3) { transition-delay: 0.3s; }
@@ -311,5 +486,16 @@ style.textContent = `
     .blog-card:nth-child(1) { transition-delay: 0.1s; }
     .blog-card:nth-child(2) { transition-delay: 0.2s; }
     .blog-card:nth-child(3) { transition-delay: 0.3s; }
+    
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+        .scroll-to-top-btn {
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            font-size: 1rem;
+        }
+    }
 `;
-document.head.appendChild(style);
+document.head.appendChild(enhancedStyle);

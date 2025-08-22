@@ -22,6 +22,30 @@
     <script type="module" src="./main.js"></script>
 </head>
 <body>
+    <!-- Mobile Navigation Bar -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-container">
+            <div class="mobile-nav-brand">SV</div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="mobile-nav-menu" id="mobileNavMenu">
+            <ul class="mobile-nav-links">
+                <li><a href="#home" class="mobile-nav-link active" title="Home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#about" class="mobile-nav-link" title="About"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#services" class="mobile-nav-link" title="Services"><i class="fas fa-cogs"></i> Services</a></li>
+                <li><a href="#skills" class="mobile-nav-link" title="Skills"><i class="fas fa-code"></i> Skills</a></li>
+                <li><a href="#blogs" class="mobile-nav-link" title="Blogs"><i class="fas fa-blog"></i> Blogs</a></li>
+                <li><a href="#links" class="mobile-nav-link" title="Links"><i class="fas fa-link"></i> Links</a></li>
+                <li><a href="#contact" class="mobile-nav-link" title="Contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            <button id="mobileThemeToggle" title="Toggle Theme" class="mobile-theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
     <!-- Sidebar Navigation -->
     <nav class="sidebar">
         <div class="sidebar-brand">SV</div>
@@ -46,7 +70,8 @@
 
         <div class="hero-container">
             <div class="name-container">
-                <svg class="name-svg" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Desktop SVG -->
+                <svg class="name-svg desktop-name-svg" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
                     <!-- First Name -->
                     <text class="name-text" id="shreeshail" x="50" y="120" text-anchor="start">Shreeshail</text>
                     
@@ -55,6 +80,18 @@
                     
                     <!-- Writing cursor -->
                     <circle class="writing-cursor" id="writingCursor" cx="50" cy="120" r="3" fill="#ffffff"/>
+                </svg>
+                
+                <!-- Mobile SVG -->
+                <svg class="name-svg mobile-name-svg" viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg">
+                    <!-- First Name -->
+                    <text class="name-text" id="shreeshail-mobile" x="20" y="100" text-anchor="start">Shreeshail</text>
+                    
+                    <!-- Last Name -->
+                    <text class="name-text" id="vitkar-mobile" x="280" y="100" text-anchor="start">Vitkar</text>
+                    
+                    <!-- Writing cursor -->
+                    <circle class="writing-cursor" id="writingCursorMobile" cx="20" cy="100" r="3" fill="#ffffff"/>
                 </svg>
             </div>
 
@@ -65,10 +102,7 @@
             </div>
         </div>
 
-        <!-- Scroll indicator -->
-        <div class="scroll-indicator">
-            <div class="scroll-arrow"></div>
-        </div>
+
     </section>
 
     <!-- About Section -->
@@ -543,9 +577,11 @@
             setTimeout(() => {
                 createParticles();
                 
-                const shreeshailText = document.getElementById('shreeshail');
-                const vitkarText = document.getElementById('vitkar');
-                const writingCursor = document.getElementById('writingCursor');
+                // Get elements based on screen size
+                const isMobile = window.innerWidth <= 768;
+                const shreeshailText = document.getElementById(isMobile ? 'shreeshail-mobile' : 'shreeshail');
+                const vitkarText = document.getElementById(isMobile ? 'vitkar-mobile' : 'vitkar');
+                const writingCursor = document.getElementById(isMobile ? 'writingCursorMobile' : 'writingCursor');
                 const subtitle = document.getElementById('subtitle');
                 
                 // Check if all elements exist before proceeding
@@ -584,13 +620,15 @@
                         update: function(anim) {
                             const progress = anim.progress / 100;
                             const bbox = shreeshailText.getBBox();
-                            writingCursor.setAttribute('cx', 50 + (bbox.width * progress));
+                            const startX = isMobile ? 20 : 50;
+                            writingCursor.setAttribute('cx', startX + (bbox.width * progress));
                         },
                         complete: function() {
                             // Move cursor to start of last name
+                            const secondStartX = isMobile ? 280 : 350;
                             anime({
                                 targets: writingCursor,
-                                cx: 350,
+                                cx: secondStartX,
                                 duration: 200,
                                 easing: 'easeInOutQuad',
                                 complete: function() {
@@ -603,7 +641,8 @@
                                         update: function(anim) {
                                             const progress = anim.progress / 100;
                                             const bbox = vitkarText.getBBox();
-                                            writingCursor.setAttribute('cx', 350 + (bbox.width * progress));
+                                            const secondStartX = isMobile ? 280 : 350;
+                                            writingCursor.setAttribute('cx', secondStartX + (bbox.width * progress));
                                         },
                                         complete: function() {
                                             // Hide writing cursor
@@ -688,7 +727,7 @@
         }
 
         // Navigation functionality
-        const navLinks = document.querySelectorAll('.sidebar-link');
+        const navLinks = document.querySelectorAll('.sidebar-link, .mobile-nav-link');
         const sections = document.querySelectorAll('.section');
 
         // Smooth scrolling for navigation links
@@ -725,13 +764,13 @@
                 }
             });
             
-            // Update active navigation link
+            // Update active navigation link for both desktop and mobile
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === `#${currentSection}`) {
                     link.classList.add('active');
                 }
-                });
+            });
             });
         });
 
@@ -837,8 +876,177 @@
             observer.disconnect();
         }, 30000);
 
+        // Mobile Navigation Functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileNavMenu = document.getElementById('mobileNavMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+
+        // Toggle mobile menu
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileNavMenu.classList.toggle('active');
+            
+            // Change icon based on menu state
+            const icon = mobileMenuToggle.querySelector('i');
+            if (mobileNavMenu.classList.contains('active')) {
+                icon.className = 'fas fa-times';
+                // Add small delay for smooth animation
+                setTimeout(() => {
+                    mobileNavMenu.style.display = 'block';
+                }, 10);
+            } else {
+                icon.className = 'fas fa-bars';
+                // Add delay before hiding to allow animation to complete
+                setTimeout(() => {
+                    mobileNavMenu.style.display = 'none';
+                }, 300);
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNavMenu.classList.remove('active');
+                const icon = mobileMenuToggle.querySelector('i');
+                icon.className = 'fas fa-bars';
+                // Hide menu after animation
+                setTimeout(() => {
+                    mobileNavMenu.style.display = 'none';
+                }, 300);
+            });
+        });
+
+        // Mobile theme toggle functionality
+        mobileThemeToggle.addEventListener('click', () => {
+            isDarkTheme = !isDarkTheme;
+            const newTheme = isDarkTheme ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            // Update both theme toggle icons
+            const sidebarIcon = themeToggle.querySelector('i');
+            const mobileIcon = mobileThemeToggle.querySelector('i');
+            
+            if (isDarkTheme) {
+                sidebarIcon.className = 'fas fa-moon';
+                mobileIcon.className = 'fas fa-moon';
+            } else {
+                sidebarIcon.className = 'fas fa-sun';
+                mobileIcon.className = 'fas fa-sun';
+            }
+
+            // Animate mobile theme toggle button
+            anime({
+                targets: mobileThemeToggle,
+                rotateY: [0, 180],
+                duration: 400,
+                easing: 'easeInOutQuad'
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuToggle.contains(e.target) && !mobileNavMenu.contains(e.target)) {
+                mobileNavMenu.classList.remove('active');
+                const icon = mobileMenuToggle.querySelector('i');
+                icon.className = 'fas fa-bars';
+                // Hide menu after animation
+                setTimeout(() => {
+                    mobileNavMenu.style.display = 'none';
+                }, 300);
+            }
+        });
+
+        // Close mobile menu when scrolling
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            if (mobileNavMenu.classList.contains('active')) {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    mobileNavMenu.classList.remove('active');
+                    const icon = mobileMenuToggle.querySelector('i');
+                    icon.className = 'fas fa-bars';
+                    // Hide menu after animation
+                    setTimeout(() => {
+                        mobileNavMenu.style.display = 'none';
+                    }, 300);
+                }, 100);
+            }
+        });
+
         // Note: Form handling is managed by main.js
         // No inline form handlers to avoid conflicts
+
+        // Handle responsive behavior on resize
+        window.addEventListener('resize', () => {
+            const isMobile = window.innerWidth <= 768;
+            const desktopSvg = document.querySelector('.desktop-name-svg');
+            const mobileSvg = document.querySelector('.mobile-name-svg');
+            
+            if (isMobile) {
+                desktopSvg.style.display = 'none';
+                mobileSvg.style.display = 'block';
+                
+                // Check and adjust mobile spacing if needed
+                adjustMobileSpacing();
+            } else {
+                desktopSvg.style.display = 'block';
+                mobileSvg.style.display = 'none';
+            }
+        });
+        
+        // Function to adjust mobile spacing to prevent overlap
+        function adjustMobileSpacing() {
+            const mobileSvg = document.querySelector('.mobile-name-svg');
+            const shreeshailText = document.getElementById('shreeshail-mobile');
+            const vitkarText = document.getElementById('vitkar-mobile');
+            
+            if (mobileSvg && shreeshailText && vitkarText) {
+                const shreeshailBBox = shreeshailText.getBBox();
+                const vitkarBBox = vitkarText.getBBox();
+                
+                // Debug: Log positioning information
+                console.log('Mobile SVG Debug:', {
+                    svgWidth: mobileSvg.viewBox.baseVal.width,
+                    svgHeight: mobileSvg.viewBox.baseVal.height,
+                    shreeshailX: shreeshailText.getAttribute('x'),
+                    shreeshailWidth: shreeshailBBox.width,
+                    vitkarX: vitkarText.getAttribute('x'),
+                    vitkarWidth: vitkarBBox.width
+                });
+                
+                // Calculate if names overlap (with additional spacing buffer)
+                const shreeshailEnd = 20 + shreeshailBBox.width;
+                const vitkarStart = 280;
+                const additionalSpacing = 25; // Account for letter-spacing and padding
+                
+                if (shreeshailEnd > vitkarStart) {
+                    // Names overlap, adjust positioning
+                    const overlap = shreeshailEnd - vitkarStart;
+                    const newVitkarX = 280 + overlap + 20 + additionalSpacing; // Add spacing buffer
+                    
+                    console.log('Adjusting Vitkar position from', vitkarText.getAttribute('x'), 'to', newVitkarX);
+                    
+                    vitkarText.setAttribute('x', newVitkarX);
+                    
+                    // Update cursor positioning for the new coordinates
+                    const writingCursor = document.getElementById('writingCursorMobile');
+                    if (writingCursor) {
+                        writingCursor.setAttribute('cx', newVitkarX);
+                    }
+                }
+            } else {
+                console.error('Mobile spacing adjustment failed - elements not found:', {
+                    mobileSvg: !!mobileSvg,
+                    shreeshailText: !!shreeshailText,
+                    vitkarText: !!vitkarText
+                });
+            }
+        }
+        
+        // Call adjustment function on page load for mobile
+        if (window.innerWidth <= 768) {
+            setTimeout(adjustMobileSpacing, 100);
+        }
 
     </script>
 

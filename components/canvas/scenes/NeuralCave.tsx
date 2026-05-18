@@ -52,10 +52,13 @@ export function NeuralCave() {
     const time = state.clock.elapsedTime;
     if (!group.current) return;
 
-    const visibility =
-      Math.min(1, Math.max(0, (t - (SCENE.start - 0.03)) / 0.04)) *
-      Math.min(1, Math.max(0, 1 - (t - SCENE.end) * 12));
-    group.current.visible = visibility > 0.02;
+    // Longer crossfade window with temple in: scene starts ramping 0.06
+    // before its own start (overlapping with temple's fade-out) and
+    // ramps over 0.08 — same envelope as temple's outFade.
+    const inFade = Math.min(1, Math.max(0, (t - (SCENE.start - 0.06)) / 0.08));
+    const outFade = Math.min(1, Math.max(0, 1 - (t - SCENE.end) / 0.08));
+    const visibility = inFade * outFade;
+    group.current.visible = visibility > 0.005;
 
     if (brainRef.current) {
       brainRef.current.rotation.y = time * 0.12;

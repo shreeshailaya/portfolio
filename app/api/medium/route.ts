@@ -3,9 +3,16 @@ import { fetchBlogs } from "@/lib/medium";
 
 /**
  * Optional JSON endpoint — clients (or future ISR consumers) can hit
- * /api/medium and get the latest posts as JSON. Server-cached for 1h.
+ * /api/medium and get the latest posts as JSON.
+ *
+ * Marked dynamic so Next doesn't try to pre-render it at build time
+ * (which conflicts with the external Medium RSS fetch and standalone
+ * output). Caching is still 1h — provided by the inner fetch's
+ * `next: { revalidate: 3600 }` option in `lib/medium.ts` + the
+ * Cache-Control header below.
  */
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export async function GET() {
   const posts = await fetchBlogs();

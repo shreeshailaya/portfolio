@@ -114,7 +114,7 @@ export const MODEL_REGISTRY: Partial<Record<ModelSlotName, ModelSlot>> = {
   // ──────────────────────────────────────────────────────────────────────
 
   "street.cityblock": {
-    path: "/models/street/cyberpunk-block.glb",
+    path: "/models/street/cyberpunk-blockx.glb",
     scale: 18,
     position: [0, -0.5, -22],
     rotation: [0, 0, 0],
@@ -158,17 +158,21 @@ export const MODEL_REGISTRY: Partial<Record<ModelSlotName, ModelSlot>> = {
 
   "temple.architecture": {
     path: "/models/temple/indian-temple.glb",
-    // Sized to dominate the scene — temple is the hero of this beat.
-    // Sits just behind the mandala centre (z=-28) so it frames the
-    // pillared ring from above.
-    scale: 15,
-    position: [0, 0, -30],
+    // HERO of this scene — the temple needs to dominate. The source
+    // GLB is small natively, so it needs a big scale boost to read.
+    // Sits at the mandala centre so it rises *through* the pillar
+    // ring as the cinematic focal point.
+    scale: 10,
+    position: [0, 0, -28],
     rotation: [0, 0, 0],
   },
 
   "temple.pillarBase": {
-    path: "/models/temple/pillar-base.glb",
-    scale: 8,
+    path: "/models/timeline/shrine.glb",
+    // Pillar GLB is large natively — keep it small enough that the
+    // temple architecture clearly out-scales each individual pillar
+    // (target: pillar ≈ 1/6 of temple silhouette).
+    scale: 1,
     position: [0, 0, 0],
     rotation: [0, 0, 0],
   },

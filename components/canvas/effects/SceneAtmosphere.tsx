@@ -46,12 +46,16 @@ const BEATS: Record<string, AtmoBeat> = {
   street: {
     bg: "#06051A",
     fog: "#150A30",
-    fogNear: 45,
-    fogFar: 200,
-    ambient: "#B084FF",
-    ambientI: 0.55,
-    directional: "#FF8A1F",
-    directionalI: 2.0,
+    fogNear: 50,
+    fogFar: 220,
+    // Cool neutral fill so the cyberpunk-block reads clearly and the
+    // overlay text stays legible. The neon HUD holograms + magenta/cyan
+    // accents still give the scene its synth identity locally — we don't
+    // need a global saffron flood to make it feel "warm cyberpunk".
+    ambient: "#B5C8FF",
+    ambientI: 0.7,
+    directional: "#F0E6D8",
+    directionalI: 1.3,
   },
   projects: {
     bg: "#070B26",

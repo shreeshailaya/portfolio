@@ -1,0 +1,299 @@
+{
+  "meta": {
+    "version": "1.0",
+    "locale": "en",
+    "siteName": "Shreeshail Vitkar — Portfolio"
+  },
+  "site": {
+    "person": {
+      "name": "Shreeshail Vitkar",
+      "title": "Technologist, Data Engineer & Automation Enthusiast",
+      "email": "shree@linksinbio.in",
+      "links": {
+        "github": "https://github.com/shreeshailaya",
+        "githubRepositories": "https://github.com/shreeshailaya?tab=repositories",
+        "linkedin": "https://www.linkedin.com/in/shreeshailaya/",
+        "calSchedule": "https://cal.com/shreeshail-vitkar",
+        "medium": "https://medium.com/@shreeshail",
+        "mediumFeed": "https://medium.com/@shreeshail/feed",
+        "tawkChat": "https://tawk.to/chat/5b9d1eabc9abba5796779244/default"
+      }
+    }
+  },
+  "hero": {
+    "badge": "AI Systems Ready for New Opportunities",
+    "headline": "Shreeshail Vitkar",
+    "tagline": {
+      "prefix": "Self-driven",
+      "roles": [
+        { "label": "Technologist", "emphasis": true },
+        { "label": "Data Engineer", "emphasis": true },
+        { "label": "Automation Enthusiast", "emphasis": true }
+      ],
+      "conjunction": "&"
+    },
+    "paragraphs": [
+      "Specializing in building automated backend systems, AI-powered tools, and digital commerce platforms that solve real business problems.",
+      "Building AI-powered solutions that scale and turn chaos into systems."
+    ],
+    "stats": [
+      { "label": "Systems Online", "value": "24/7" },
+      { "label": "Automation Reliability", "value": "99.9%" },
+      { "label": "AI-First Delivery", "value": "Enabled" }
+    ],
+    "primaryCta": { "label": "Get In Touch", "href": "mailto:shree@linksinbio.in" },
+    "secondaryCta": { "label": "View Projects", "href": "https://github.com/shreeshailaya?tab=repositories" },
+    "social": [
+      { "icon": "Github", "href": "https://github.com/shreeshailaya", "label": "GitHub" },
+      { "icon": "Linkedin", "href": "https://www.linkedin.com/in/shreeshailaya/", "label": "LinkedIn" },
+      { "icon": "Mail", "href": "mailto:shree@linksinbio.in", "label": "Email" }
+    ]
+  },
+  "about": {
+    "badge": "About Me",
+    "title": { "line1": "Building the Future with", "highlight": "Code & Vision" },
+    "introHtmlHints": [
+      "I'm a self-driven technologist, data engineer, and automation enthusiast with a strong foundation in Python, cloud-native architecture, and real-world API integrations. I specialize in building automated backend systems, AI-powered tools, and digital commerce platforms that solve real business problems with speed and scale."
+    ],
+    "spotlight": {
+      "title": "Technical Excellence & Product Thinking",
+      "body": "I blend technical execution with product thinking, and have launched multiple MVPs that validate ideas, drive revenue, and enable automation-first workflows."
+    },
+    "highlights": [
+      { "icon": "Code2", "title": "Full-Stack Builder", "description": "I don't just plan — I ship working tools and MVPs that generate value" },
+      { "icon": "Zap", "title": "End-to-End Automator", "description": "From API integration to digital delivery to cloud-based workflows" },
+      { "icon": "Database", "title": "Business-Aware Technologist", "description": "Every tool I build solves a real need and often results in product-market fit tests" },
+      { "icon": "Bot", "title": "AI & Automation Expert", "description": "Constantly exploring new technologies in AI, data engineering, and automation" },
+      { "icon": "Users", "title": "Supportive Mentor", "description": "I've mentored junior engineers and encourage open-source contributions" },
+      { "icon": "Cloud", "title": "Cloud-Native Architecture", "description": "Strong foundation in Python, cloud-native architecture, and real-world API integrations" }
+    ]
+  },
+  "projects": {
+    "badge": "Projects & MVPs",
+    "title": { "line1": "Building Solutions That", "highlight": "Drive Results" },
+    "subtitle": "From AI-powered platforms to automated e-commerce systems, here are the projects that showcase my ability to turn ideas into reality.",
+    "main": [
+      {
+        "id": "agentmock",
+        "title": "AgentMock.com",
+        "subtitle": "AI Product Studio",
+        "description": "A vision-led platform focused on creating lightweight AI tools and automations. From AI-powered chatbots trained on private documents, to job preparation engines.",
+        "features": [
+          "Create Resume for This Job",
+          "Prepare Me for This Interview",
+          "Privacy-respecting AI agents",
+          "Open models & serverless backends"
+        ],
+        "icon": "Bot",
+        "href": "https://agentmock.com",
+        "tags": ["AI", "Python", "Serverless", "Privacy-First"],
+        "gradient": "from-purple-600 to-blue-600"
+      },
+      {
+        "id": "publicmart",
+        "title": "PublicMart.in",
+        "subtitle": "Digital Marketplace",
+        "description": "An e-commerce site selling unique digital packs with automated delivery systems. Built with webhook-first automation using Python and AWS Lambda.",
+        "features": [
+          "1500+ Animated Funny Reels",
+          "1000+ Email Templates",
+          "250+ Hindi-English eBooks",
+          "Zero-touch fulfillment"
+        ],
+        "icon": "ShoppingCart",
+        "href": "https://publicmart.in",
+        "tags": ["E-commerce", "WooCommerce", "AWS Lambda", "Automation"],
+        "gradient": "from-green-600 to-blue-600"
+      }
+    ],
+    "otherTitle": "Other Notable MVPs & Systems",
+    "other": [
+      {
+        "title": "AI Chatbot from Documents",
+        "description": "Lightweight chatbot framework that answers only from uploaded document context with PDF parsing and multilingual support.",
+        "icon": "FileText",
+        "tags": ["AI", "PDF Processing", "Multilingual"]
+      },
+      {
+        "title": "WooCommerce → Google Drive Integration",
+        "description": "Automated system to share private digital files via Drive API post-purchase using webhooks.",
+        "icon": "Database",
+        "tags": ["API Integration", "Webhooks", "Automation"]
+      },
+      {
+        "title": "Microsoft Dynamics 365 Tools",
+        "description": "Async and secure Python-based contact insertion/deletion tools with performance optimization.",
+        "icon": "Users",
+        "tags": ["Enterprise", "Python", "Performance"]
+      },
+      {
+        "title": "CSV-to-Database Mapper",
+        "description": "Automated mapping and ingestion system for mismatched CSVs and SQL table schemas.",
+        "icon": "Zap",
+        "tags": ["Data Engineering", "ETL", "SQL"]
+      }
+    ]
+  },
+  "skills": {
+    "badge": "Technologies & Skills",
+    "title": { "line1": "My Technical", "highlight": "Arsenal" },
+    "subtitle": "A comprehensive toolkit built through years of hands-on experience in building scalable, automated systems.",
+    "categories": [
+      { "title": "Languages", "icon": "Code", "skills": ["Python", "Java", "Shell", "JavaScript"], "gradient": "from-blue-600 to-purple-600" },
+      { "title": "Cloud & Infra", "icon": "Cloud", "skills": ["AWS (IOT, Lambda, S3, AppFlow)", "Docker", "CI/CD"], "gradient": "from-green-600 to-blue-600" },
+      { "title": "APIs", "icon": "Globe", "skills": ["Salesforce", "Google Drive", "WooCommerce REST", "Microsoft Dynamics Web API"], "gradient": "from-purple-600 to-pink-600" },
+      { "title": "Automation", "icon": "Zap", "skills": ["N8N", "Webhooks", "FastAPI", "Event-based Architecture"], "gradient": "from-yellow-600 to-orange-600" },
+      { "title": "Data Engineering", "icon": "Database", "skills": ["Glue", "ETL pipelines", "Airbyte", "Databricks"], "gradient": "from-indigo-600 to-blue-600" },
+      { "title": "AI/ML Stack", "icon": "Bot", "skills": ["PyTorch", "Open-source LLMs", "Contextual Chatbots"], "gradient": "from-red-600 to-purple-600" }
+    ],
+    "coreStrengthsTitle": "Core Strengths",
+    "coreStrengthsSubtitle": "Proficiency levels based on real-world project experience",
+    "coreStrengths": [
+      { "name": "Python Development", "level": 95 },
+      { "name": "API Integration", "level": 90 },
+      { "name": "Cloud Architecture", "level": 85 },
+      { "name": "Automation Systems", "level": 92 },
+      { "name": "Data Engineering", "level": 88 },
+      { "name": "AI/ML Implementation", "level": 85 }
+    ],
+    "footerCard": {
+      "title": "Always Learning, Always Building",
+      "body": "I stay ahead of the curve in AI, data engineering, and automation — constantly exploring new technologies and techniques to deliver cutting-edge solutions."
+    }
+  },
+  "services": {
+    "badge": "Services",
+    "title": { "line1": "Turn Ideas Into", "highlight": "Reality" },
+    "subtitle": "We help individuals, startups, and small businesses turn ideas into reality with smart technology, automation, and design",
+    "items": [
+      { "icon": "Rocket", "title": "Product Engineering & MVP Development", "description": "From idea to launch – fast and focused. We help you transform your concepts into real, working software. Whether it's a prototype, proof of concept, or a complete MVP, we build scalable, clean, and cost-efficient products that you can test with real users quickly.", "idealFor": "Startups, entrepreneurs, SaaS builders", "gradient": "from-blue-600 to-purple-600" },
+      { "icon": "Bot", "title": "AI & Automation Workflows", "description": "Automate repetitive tasks and scale smarter. We design intelligent workflows using tools like Python, N8N, and custom APIs to automate your business logic — from lead capture to customer support and document processing. Integrate your tools, reduce manual work, and grow without growing overhead.", "idealFor": "Agencies, digital sellers, B2B systems", "gradient": "from-purple-600 to-pink-600" },
+      { "icon": "Palette", "title": "Custom Web Design & Development", "description": "Beautiful. Functional. Optimized. We build modern, responsive websites tailored to your brand — whether it's a portfolio, landing page, or business website. All designs are mobile-friendly, SEO-ready, and lightning-fast.", "idealFor": "Personal brands, businesses, consultants", "gradient": "from-green-600 to-blue-600" },
+      { "icon": "MessageSquare", "title": "Bulk SMS Services", "description": "Reach thousands, instantly. Send promotional, transactional, or OTP SMS with our reliable bulk messaging solution. We support integration with your existing CRM, website, or backend systems.", "idealFor": "Schools, retailers, logistics", "gradient": "from-orange-600 to-red-600" },
+      { "icon": "Server", "title": "Web Hosting", "description": "Reliable and secure hosting to keep you online. We offer affordable, fast, and secure web hosting packages for websites, web apps, and landing pages — with full support and uptime monitoring.", "idealFor": "WordPress sites, custom sites, landing pages", "gradient": "from-indigo-600 to-blue-600" },
+      { "icon": "Workflow", "title": "N8N Workflow Hosting", "description": "Self-hosted N8N for full control of your automations. We provide optimized N8N hosting so you can create powerful no-code/low-code automation workflows — without platform limits. Full setup, maintenance, and custom module support included.", "idealFor": "Automation lovers, technical founders", "gradient": "from-teal-600 to-green-600" },
+      { "icon": "Mail", "title": "Email Hosting", "description": "Branded email that works. Get professional email addresses like you@yourdomain.com with our secure and easy-to-manage email hosting. Supports webmail, IMAP/SMTP, and spam protection.", "idealFor": "Businesses, freelancers, teams", "gradient": "from-blue-600 to-cyan-600" },
+      { "icon": "Globe", "title": "WordPress Design & Development", "description": "Full control. Endless possibilities. We specialize in creating and customizing WordPress websites — including custom plugin development, custom theme development, advanced theme/plugin customization, and performance optimization and integrations.", "idealFor": "Self-hosted CMS solutions", "gradient": "from-gray-600 to-blue-600" }
+    ],
+    "footerCta": {
+      "title": "Ready to Start Your Project?",
+      "body": "Let's discuss how we can help you build, automate, and scale your business with the right technology solutions.",
+      "buttonLabel": "Get Started Today"
+    }
+  },
+  "usefulLinks": {
+    "badge": "Useful Links",
+    "title": { "line1": "Quick Access to Our", "highlight": "Projects & Services" },
+    "subtitle": "Explore our live projects, tools, and platforms that are helping businesses and individuals achieve their goals.",
+    "links": [
+      { "title": "Agent Mock", "displayUrl": "agentmock.com", "href": "https://agentmock.com", "description": "AI HR platform to hire the suitable candidate", "icon": "Bot", "gradient": "from-purple-600 to-blue-600" },
+      { "title": "Email Login", "displayUrl": "email.linksinbio.in", "href": "https://email.linksinbio.in", "description": "Professional email hosting and management portal", "icon": "Mail", "gradient": "from-blue-600 to-cyan-600" },
+      { "title": "SMS Panel", "displayUrl": "sms.hishree.com", "href": "http://sms.hishree.com", "description": "Bulk SMS services and messaging platform", "icon": "MessageSquare", "gradient": "from-green-600 to-blue-600" },
+      { "title": "PublicMart E-Comm Store", "displayUrl": "publicmart.in", "href": "https://publicmart.in", "description": "Digital marketplace for creative products and digital packs", "icon": "ShoppingCart", "gradient": "from-orange-600 to-red-600" },
+      { "title": "CDAC Notes", "displayUrl": "github.com/shreeshailaya/C-DAC-Notes", "href": "https://github.com/shreeshailaya/C-DAC-Notes", "description": "Comprehensive study materials and notes for CDAC courses", "icon": "BookOpen", "gradient": "from-indigo-600 to-purple-600" },
+      { "title": "Job Portal", "displayUrl": "linksinbio.in/jobs", "href": "https://linksinbio.in/jobs", "description": "Find and post job opportunities in technology and development", "icon": "Briefcase", "gradient": "from-teal-600 to-green-600" }
+    ],
+    "footerCta": {
+      "title": "Explore More Projects",
+      "body": "These are just a few of our active projects. We're constantly building and launching new solutions to help businesses grow.",
+      "buttonLabel": "View All Projects",
+      "href": "https://github.com/shreeshailaya/"
+    }
+  },
+  "blogs": {
+    "badge": "Latest Blogs",
+    "title": { "line1": "Thoughts & Insights", "highlight": "from My Medium" },
+    "subtitle": "Explore my latest articles on technology, development, and industry insights. Stay updated with practical tips and real-world experiences.",
+    "feed": {
+      "proxyBase": "https://api.allorigins.win/raw?url=",
+      "rssUrl": "https://medium.com/@shreeshail/feed",
+      "maxPosts": 3
+    },
+    "fallbackPosts": [
+      {
+        "title": "Building Scalable Web Applications with Modern Technologies",
+        "link": "https://medium.com/@shreeshail/building-scalable-web-applications",
+        "pubDate": "2026-01-01T00:00:00.000Z",
+        "description": "Learn how to build scalable web applications using modern frameworks and best practices for performance and maintainability.",
+        "guid": "fallback-1"
+      },
+      {
+        "title": "Data Engineering Best Practices for 2024",
+        "link": "https://medium.com/@shreeshail/data-engineering-best-practices",
+        "pubDate": "2025-12-31T00:00:00.000Z",
+        "description": "Explore the latest trends and best practices in data engineering, including cloud platforms, automation, and data pipeline optimization.",
+        "guid": "fallback-2"
+      },
+      {
+        "title": "The Future of AI in Software Development",
+        "link": "https://medium.com/@shreeshail/future-of-ai-in-software-development",
+        "pubDate": "2025-12-30T00:00:00.000Z",
+        "description": "Discover how artificial intelligence is transforming software development workflows and what developers need to know to stay ahead.",
+        "guid": "fallback-3"
+      }
+    ],
+    "errorMessage": "Failed to load latest blogs. Please check back later.",
+    "footerCta": {
+      "title": "Follow My Writing Journey",
+      "body": "I regularly share insights about technology, development practices, and industry trends. Follow me on Medium to stay updated with my latest thoughts and tutorials.",
+      "buttonLabel": "Follow on Medium",
+      "href": "https://medium.com/@shreeshail"
+    }
+  },
+  "vision": {
+    "badge": "Vision & Future",
+    "title": { "line1": "Simplifying Digital", "highlight": "Complexity" },
+    "subtitle": "I'm on a mission to simplify digital complexity for solopreneurs, creators, and businesses by delivering fast, privacy-respecting, and AI-powered systems.",
+    "mission": {
+      "title": "My Mission",
+      "body": "Whether it's a fully automated product delivery system, a smart data pipeline, or a micro SaaS idea — I build with clarity, ownership, and a focus on results."
+    },
+    "driversTitle": "What Drives Me",
+    "drivers": [
+      "Building tools that generate real business value",
+      "Enabling automation-first workflows for modern businesses",
+      "Democratizing access to AI and automation technologies",
+      "Creating privacy-respecting solutions in an AI-driven world"
+    ],
+    "points": [
+      { "icon": "Zap", "title": "Fast & Efficient", "description": "Delivering solutions that work at speed without compromising quality" },
+      { "icon": "Shield", "title": "Privacy-Respecting", "description": "Building systems that protect user data and respect digital privacy" },
+      { "icon": "Lightbulb", "title": "AI-Powered", "description": "Leveraging artificial intelligence to solve complex business problems" },
+      { "icon": "Users", "title": "User-Focused", "description": "Creating tools that genuinely improve workflows and drive results" }
+    ],
+    "footerCta": {
+      "title": "Ready to Build the Future Together?",
+      "body": "Let's create something amazing that solves real problems and drives meaningful results.",
+      "buttonLabel": "Start a Conversation",
+      "href": "https://tawk.to/chat/5b9d1eabc9abba5796779244/default"
+    }
+  },
+  "contact": {
+    "badge": "Get In Touch",
+    "title": { "line1": "Let's Build Something", "highlight": "Amazing Together" },
+    "subtitle": "Whether you have a project in mind, need technical consultation, or just want to connect, I'm always open to discussing new opportunities and collaborations.",
+    "methods": [
+      { "icon": "Mail", "title": "Email", "description": "Let's discuss your next project", "action": "Send Email", "href": "mailto:shree@linksinbio.in", "gradient": "from-blue-600 to-purple-600" },
+      { "icon": "Linkedin", "title": "LinkedIn", "description": "Connect for professional networking", "action": "Connect", "href": "https://www.linkedin.com/in/shreeshailaya/", "gradient": "from-blue-600 to-blue-800" },
+      { "icon": "Github", "title": "GitHub", "description": "Check out my open source contributions", "action": "View Profile", "href": "https://github.com/shreeshailaya/", "gradient": "from-gray-600 to-gray-800" }
+    ],
+    "infoCards": [
+      {
+        "icon": "MapPin",
+        "title": "Location & Availability",
+        "body": "Based in India, working with clients globally. Available for remote collaborations, consulting projects, and full-time opportunities in data engineering and automation."
+      },
+      {
+        "icon": "Calendar",
+        "title": "Response Time",
+        "body": "I typically respond to emails and messages within 24 hours. For urgent projects or time-sensitive discussions, feel free to mention it in your message."
+      }
+    ],
+    "footerCta": {
+      "title": "Ready to Start Your Next Project?",
+      "body": "From MVP development to enterprise automation, let's discuss how we can bring your ideas to life with cutting-edge technology and proven execution.",
+      "primary": { "label": "Send Message", "href": "mailto:shree@linksinbio.in" },
+      "secondary": { "label": "Schedule Call", "href": "https://cal.com/shreeshail-vitkar" }
+    }
+  }
+}

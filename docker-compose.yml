@@ -1,0 +1,19 @@
+services:
+  digital-yatri:
+    container_name: digital-yatri
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: digital-yatri:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+    networks:
+      - web
+
+networks:
+  web:
+    driver: bridge

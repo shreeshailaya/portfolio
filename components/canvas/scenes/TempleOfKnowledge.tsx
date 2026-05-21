@@ -62,30 +62,22 @@ export function TempleOfKnowledge() {
 
   useFrame((state) => {
     const t = smoothRef.current;
-    const time = state.clock.elapsedTime;
     if (!group.current) return;
 
-    // Longer overlap window (0.06 in / 0.06 out) so the temple's
-    // geometry + key lights blend gently into the neural scene rather
-    // than snapping off when crossing the scene boundary.
+    // Longer overlap window so the temple's geometry + key lights blend
+    // gently into the neural scene rather than snapping off at the
+    // scene boundary.
     const inFade = Math.min(1, Math.max(0, (t - (SCENE.start - 0.06)) / 0.08));
     const outFade = Math.min(1, Math.max(0, 1 - (t - SCENE.end) / 0.08));
     const visibility = inFade * outFade;
     group.current.visible = visibility > 0.005;
+    if (!group.current.visible) return;
 
     // Smoothstep the visibility for buttery light fades
     const v = visibility * visibility * (3 - 2 * visibility);
-
-    if (keySpotRef.current) {
-      keySpotRef.current.intensity = KEY_SPOT_I * v;
-    }
-    if (keyPointRef.current) {
-      keyPointRef.current.intensity = KEY_POINT_I * v;
-    }
-
-    if (yantraRef.current) {
-      yantraRef.current.rotation.z = time * 0.08;
-    }
+    if (keySpotRef.current) keySpotRef.current.intensity = KEY_SPOT_I * v;
+    if (keyPointRef.current) keyPointRef.current.intensity = KEY_POINT_I * v;
+    if (yantraRef.current) yantraRef.current.rotation.z = state.clock.elapsedTime * 0.08;
   });
 
   return (

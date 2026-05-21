@@ -35,8 +35,11 @@ export function Experience() {
   const ambientRef = useRef<THREE.AmbientLight>(null);
   const directionalRef = useRef<THREE.DirectionalLight>(null);
 
+  // Tighter DPR ceilings — every 0.5 of DPR roughly doubles the pixel
+  // count and thus shader cost. Cap mobile at 1.25 so retina phones
+  // don't bake themselves rendering this canvas full-resolution.
   const dpr = useMemo<[number, number]>(
-    () => (isMobile ? [1, 1.5] : [1, 2]),
+    () => (isMobile ? [1, 1.25] : [1, 1.75]),
     [isMobile],
   );
 
@@ -98,7 +101,7 @@ export function Experience() {
           <TimelinePath />
           <KailashSummit />
 
-          <GlobalParticles count={isMobile ? 600 : 1400} />
+          <GlobalParticles count={isMobile ? 250 : 700} />
           <SceneSparkles isMobile={isMobile} />
 
           {/* Cinematic post-processing — disabled on mobile for perf */}

@@ -51,18 +51,21 @@ export function KailashSummit() {
 
   useFrame((state) => {
     const t = smoothRef.current;
-    const local = SCENE.local(t);
-    const time = state.clock.elapsedTime;
     if (!group.current) return;
 
-    const visibility = Math.min(1, Math.max(0, (t - (SCENE.start - 0.03)) / 0.05));
-    group.current.visible = visibility > 0.02;
+    const inFade = Math.min(1, Math.max(0, (t - (SCENE.start - 0.06)) / 0.08));
+    group.current.visible = inFade > 0.005;
+    if (!group.current.visible) return;
+
+    const local = SCENE.local(t);
+    const time = state.clock.elapsedTime;
 
     if (memoriesRef.current) {
-      memoriesRef.current.children.forEach((m, i) => {
-        m.position.y = memories[i].y + Math.sin(time * 0.6 + i) * 0.25;
-        m.rotation.y = time * 0.3 + i;
-      });
+      const kids = memoriesRef.current.children;
+      for (let i = 0; i < kids.length; i++) {
+        kids[i].position.y = memories[i].y + Math.sin(time * 0.6 + i) * 0.25;
+        kids[i].rotation.y = time * 0.3 + i;
+      }
     }
 
     if (orbAnchor.current) {

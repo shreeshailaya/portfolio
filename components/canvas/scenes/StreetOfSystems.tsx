@@ -33,43 +33,38 @@ export function StreetOfSystems() {
 
   useFrame((state) => {
     const t = smoothRef.current;
-    const local = SCENE.local(t);
     if (!group.current) return;
 
-    // Fade in/out
-    const visibility =
-      Math.min(1, Math.max(0, (t - (SCENE.start - 0.03)) / 0.04)) *
-      Math.min(1, Math.max(0, 1 - (t - SCENE.end) * 12));
-    group.current.visible = visibility > 0.02;
+    // Visibility envelope w/ generous crossfade
+    const inFade = Math.min(1, Math.max(0, (t - (SCENE.start - 0.06)) / 0.08));
+    const outFade = Math.min(1, Math.max(0, 1 - (t - SCENE.end) / 0.08));
+    const visibility = inFade * outFade;
+    group.current.visible = visibility > 0.005;
 
-    // Container rotation
+    // Off-screen short-circuit — no traverse, no container loop.
+    if (!group.current.visible) return;
+
+    const time = state.clock.elapsedTime;
+    const local = SCENE.local(t);
+
+    // Container rotation (only inside the 14-container group, not full graph)
     if (containerRef.current) {
-      containerRef.current.children.forEach((c, idx) => {
-        c.rotation.y = state.clock.elapsedTime * 0.25 + idx;
-        c.rotation.x = Math.sin(state.clock.elapsedTime * 0.4 + idx) * 0.2;
-      });
+      const kids = containerRef.current.children;
+      for (let i = 0; i < kids.length; i++) {
+        kids[i].rotation.y = time * 0.25 + i;
+        kids[i].rotation.x = Math.sin(time * 0.4 + i) * 0.2;
+      }
     }
 
-    // Soft scene-wide opacity via materials.opacity tween
-    group.current.traverse((obj) => {
-      const m = (obj as THREE.Mesh).material;
-      if (m && !Array.isArray(m)) {
-        const mat = m as THREE.Material & { opacity?: number; userData?: any };
-        if (mat.transparent && typeof mat.opacity === "number") {
-          const base = (mat.userData?.baseOpacity as number) ?? mat.opacity;
-          if (mat.userData) mat.userData.baseOpacity = base;
-          mat.opacity = base * visibility;
-        }
-      }
-    });
-
     // Camera-pull on data streams
-    const t2 = state.clock.elapsedTime * 0.6 + local * 4;
-    group.current.children.forEach((c) => {
+    const t2 = time * 0.6 + local * 4;
+    const top = group.current.children;
+    for (let i = 0; i < top.length; i++) {
+      const c = top[i];
       if (c.name === "data-stream") {
         c.position.z = ((t2 % 8) - 8 + c.userData.offset) % 60;
       }
-    });
+    }
   });
 
   return (

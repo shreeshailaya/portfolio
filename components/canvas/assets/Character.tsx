@@ -22,8 +22,9 @@ const DRACO_DECODER =
 interface CharacterProps {
   /** Model slot for the avatar GLB (e.g. ReadyPlayerMe export). */
   slot: ModelSlotName;
-  /** Procedural fallback rendered while loading / missing. */
-  children: ReactNode;
+  /** Optional procedural fallback rendered while loading / missing.
+   *  Omit once the slot's GLB is confirmed registered. */
+  children?: ReactNode;
   /**
    * Animation key in ANIMATION_REGISTRY (e.g. "yatri.meditate"). If unset,
    * plays the first clip embedded in the avatar GLB (if any).
@@ -48,7 +49,7 @@ interface CharacterProps {
  */
 export function Character({
   slot,
-  children,
+  children = null,
   animation,
   speed = 1,
 }: CharacterProps) {

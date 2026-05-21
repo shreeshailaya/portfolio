@@ -44,20 +44,22 @@ export function TimelinePath() {
 
   useFrame((state) => {
     const t = smoothRef.current;
-    const time = state.clock.elapsedTime;
     if (!group.current) return;
 
-    const visibility =
-      Math.min(1, Math.max(0, (t - (SCENE.start - 0.03)) / 0.04)) *
-      Math.min(1, Math.max(0, 1 - (t - SCENE.end) * 12));
-    group.current.visible = visibility > 0.02;
+    const inFade = Math.min(1, Math.max(0, (t - (SCENE.start - 0.06)) / 0.08));
+    const outFade = Math.min(1, Math.max(0, 1 - (t - SCENE.end) / 0.08));
+    const visibility = inFade * outFade;
+    group.current.visible = visibility > 0.005;
+    if (!group.current.visible) return;
 
-    cairnRefs.current.forEach((g, i) => {
-      if (!g) return;
+    const time = state.clock.elapsedTime;
+    for (let i = 0; i < cairnRefs.current.length; i++) {
+      const g = cairnRefs.current[i];
+      if (!g) continue;
       g.rotation.y = time * 0.2 + i;
       const pulse = 1 + Math.sin(time * 1.4 + i) * 0.07;
       g.scale.setScalar(pulse);
-    });
+    }
   });
 
   return (

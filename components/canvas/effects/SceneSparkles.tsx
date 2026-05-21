@@ -10,7 +10,10 @@ import { Sparkles } from "@react-three/drei";
  * combined with bloom + fog.
  */
 export function SceneSparkles({ isMobile = false }: { isMobile?: boolean }) {
-  const m = isMobile ? 0.45 : 1;
+  // Mobile gets ~30% of desktop counts; desktop also tuned down from
+  // the original spec since 990 sparkles measurable on the GPU was too
+  // much on integrated chips. Total ≈ 580 desktop / 175 mobile.
+  const m = isMobile ? 0.3 : 0.6;
   return (
     <group>
       {/* Scene 1 — Cosmic Awakening: golden cosmic motes */}

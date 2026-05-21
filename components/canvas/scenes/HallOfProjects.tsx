@@ -50,21 +50,22 @@ export function HallOfProjects() {
 
   useFrame((state) => {
     const t = smoothRef.current;
-    const local = SCENE.local(t);
-    const time = state.clock.elapsedTime;
-
     if (!group.current) return;
-    const visibility =
-      Math.min(1, Math.max(0, (t - (SCENE.start - 0.03)) / 0.04)) *
-      Math.min(1, Math.max(0, 1 - (t - SCENE.end) * 12));
-    group.current.visible = visibility > 0.02;
 
+    const inFade = Math.min(1, Math.max(0, (t - (SCENE.start - 0.06)) / 0.08));
+    const outFade = Math.min(1, Math.max(0, 1 - (t - SCENE.end) / 0.08));
+    const visibility = inFade * outFade;
+    group.current.visible = visibility > 0.005;
+    if (!group.current.visible) return;
+
+    const time = state.clock.elapsedTime;
     if (portalsRef.current) {
-      portalsRef.current.children.forEach((p, i) => {
-        p.rotation.z = time * (0.2 + i * 0.05);
+      const kids = portalsRef.current.children;
+      for (let i = 0; i < kids.length; i++) {
+        kids[i].rotation.z = time * (0.2 + i * 0.05);
         const pulse = 1 + Math.sin(time * 1.2 + i) * 0.05;
-        p.scale.setScalar(pulse);
-      });
+        kids[i].scale.setScalar(pulse);
+      }
     }
   });
 

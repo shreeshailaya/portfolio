@@ -11,16 +11,22 @@ const SCENE = getScene("neural");
 
 /**
  * SCENE 5 — Neural Cave
- * Dark cave with a giant central neural sphere. Glowing roots radiate from
- * the floor, embeddings flow like rivers. Mostly cool blue/violet light.
+ *
+ * Dark cave with a giant central neural sphere. Glowing roots radiate
+ * from the floor, embeddings flow like a river toward the brain.
+ *
+ * Performance:
+ *   - Flow particles are GPU-driven (uTime uniform, no CPU loop).
+ *   - useFrame early-returns when the scene is not visible — the cave
+ *     contributes ~0 work to other scenes' frames.
  */
 export function NeuralCave() {
   const group = useRef<THREE.Group>(null);
   const brainRef = useRef<THREE.Group>(null);
-  const flowRef = useRef<THREE.Points>(null);
+  const flowMatRef = useRef<THREE.ShaderMaterial>(null);
   const { smoothRef } = useScrollProgress();
 
-  // Glowing root strands
+  // Glowing root strands — static geometry
   const roots = useMemo(() => {
     return Array.from({ length: 14 }).map((_, i) => {
       const angle = (i / 14) * Math.PI * 2;
@@ -33,18 +39,67 @@ export function NeuralCave() {
     });
   }, []);
 
-  // Flowing embedding particles forming a "river" toward the brain
-  const flow = useMemo(() => {
-    const n = 900;
-    const pos = new Float32Array(n * 3);
-    const speed = new Float32Array(n);
-    for (let i = 0; i < n; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 18;
-      pos[i * 3 + 1] = 0.4 + Math.random() * 6;
-      pos[i * 3 + 2] = -22 - Math.random() * 22;
-      speed[i] = 0.5 + Math.random() * 1.4;
+  // Embedding river particles — positions are seeds + offsets, motion
+  // computed in vertex shader using `uTime`.
+  const FLOW_COUNT = 600;
+  const { flowPositions, flowSeeds } = useMemo(() => {
+    const flowPositions = new Float32Array(FLOW_COUNT * 3);
+    const flowSeeds = new Float32Array(FLOW_COUNT);
+    for (let i = 0; i < FLOW_COUNT; i++) {
+      flowPositions[i * 3] = (Math.random() - 0.5) * 18;
+      flowPositions[i * 3 + 1] = 0.4 + Math.random() * 6;
+      flowPositions[i * 3 + 2] = -22 - Math.random() * 22;
+      flowSeeds[i] = Math.random();
     }
-    return { pos, speed, n };
+    return { flowPositions, flowSeeds };
+  }, []);
+
+  const flowMaterial = useMemo(() => {
+    return new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uPxRatio: { value: 1 },
+        uColor: { value: new THREE.Color("#B388FF") },
+        uOpacity: { value: 0.85 },
+      },
+      vertexShader: /* glsl */ `
+        attribute float seed;
+        uniform float uTime;
+        uniform float uPxRatio;
+
+        void main() {
+          // Push each particle along z toward the brain (z = -38) using
+          // a phase based on seed so they loop independently. Modulo
+          // wraps them back to the start when they reach the brain.
+          float phase = mod(seed + uTime * 0.06, 1.0);
+          float startZ = -22.0;
+          float endZ = -38.0;
+          vec3 p = position;
+          p.z = mix(startZ, endZ, phase);
+          // Slight x drift toward the centre (axis of flow).
+          p.x = position.x * (1.0 - phase * 0.6);
+
+          vec4 mv = modelViewMatrix * vec4(p, 1.0);
+          gl_Position = projectionMatrix * mv;
+          gl_PointSize = 5.0 * uPxRatio * (1.0 / -mv.z);
+        }
+      `,
+      fragmentShader: /* glsl */ `
+        uniform vec3 uColor;
+        uniform float uOpacity;
+
+        void main() {
+          vec2 c = gl_PointCoord - vec2(0.5);
+          float d = length(c);
+          float a = smoothstep(0.5, 0.0, d);
+          gl_FragColor = vec4(uColor, a * uOpacity);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      toneMapped: false,
+    });
   }, []);
 
   useFrame((state) => {
@@ -52,39 +107,28 @@ export function NeuralCave() {
     const time = state.clock.elapsedTime;
     if (!group.current) return;
 
-    // Longer crossfade window with temple in: scene starts ramping 0.06
-    // before its own start (overlapping with temple's fade-out) and
-    // ramps over 0.08 — same envelope as temple's outFade.
+    // Visibility envelope — matches temple/timeline overlap for clean
+    // crossfade. Same envelope used to gate per-frame work below.
     const inFade = Math.min(1, Math.max(0, (t - (SCENE.start - 0.06)) / 0.08));
     const outFade = Math.min(1, Math.max(0, 1 - (t - SCENE.end) / 0.08));
     const visibility = inFade * outFade;
     group.current.visible = visibility > 0.005;
+
+    // Off-screen short-circuit. Saves all the work below when scrolling
+    // through other scenes — by far the biggest perf win of the page.
+    if (!group.current.visible) return;
 
     if (brainRef.current) {
       brainRef.current.rotation.y = time * 0.12;
       brainRef.current.rotation.x = Math.sin(time * 0.2) * 0.1;
     }
 
-    if (flowRef.current) {
-      const geom = flowRef.current.geometry as THREE.BufferGeometry;
-      const attr = geom.attributes.position as THREE.BufferAttribute;
-      const arr = attr.array as Float32Array;
-      for (let i = 0; i < flow.n; i++) {
-        // Push toward brain at z = -38
-        const targetZ = -38;
-        const dz = targetZ - arr[i * 3 + 2];
-        const dx = -arr[i * 3 + 0] * 0.02;
-        arr[i * 3] += dx * flow.speed[i] * 0.05;
-        arr[i * 3 + 2] += dz * 0.005 * flow.speed[i];
-
-        // Recycle particles that have arrived
-        if (arr[i * 3 + 2] < -37) {
-          arr[i * 3] = (Math.random() - 0.5) * 18;
-          arr[i * 3 + 1] = 0.4 + Math.random() * 6;
-          arr[i * 3 + 2] = -22;
-        }
-      }
-      attr.needsUpdate = true;
+    if (flowMatRef.current) {
+      flowMatRef.current.uniforms.uTime.value = time;
+      flowMatRef.current.uniforms.uPxRatio.value = Math.min(
+        2,
+        state.gl.getPixelRatio(),
+      );
     }
   });
 
@@ -110,7 +154,6 @@ export function NeuralCave() {
             <cylinderGeometry args={[0.04, 0.08, r.h, 6]} />
             <meshBasicMaterial color={r.c} transparent opacity={0.85} toneMapped={false} />
           </mesh>
-          {/* glow halo at top */}
           <mesh position={[0, r.h, 0]}>
             <sphereGeometry args={[0.18, 12, 12]} />
             <meshBasicMaterial color={r.c} transparent opacity={0.9} toneMapped={false} />
@@ -118,25 +161,23 @@ export function NeuralCave() {
         </group>
       ))}
 
-      {/* Embedding river */}
-      <points ref={flowRef}>
+      {/* Embedding river — GPU shader, zero CPU work per frame */}
+      <points frustumCulled={false}>
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            count={flow.n}
-            array={flow.pos}
+            count={FLOW_COUNT}
+            array={flowPositions}
             itemSize={3}
           />
+          <bufferAttribute
+            attach="attributes-seed"
+            count={FLOW_COUNT}
+            array={flowSeeds}
+            itemSize={1}
+          />
         </bufferGeometry>
-        <pointsMaterial
-          size={0.07}
-          color="#B388FF"
-          transparent
-          opacity={0.85}
-          sizeAttenuation
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-        />
+        <primitive ref={flowMatRef} object={flowMaterial} attach="material" />
       </points>
 
       {/* Giant AI brain — central neural sphere */}
@@ -164,7 +205,6 @@ export function NeuralCave() {
             roughness={0.1}
           />
         </mesh>
-        {/* halo */}
         <mesh scale={1.6}>
           <sphereGeometry args={[2.2, 32, 32]} />
           <meshBasicMaterial

@@ -143,7 +143,7 @@ export const MODEL_REGISTRY: Partial<Record<ModelSlotName, ModelSlot>> = {
 
   "projects.archway": {
     path: "/models/projects/archway.glb",
-    scale: 10,
+    scale: 5,
     position: [0, 0, -28],
     rotation: [0, 0, 0],
     // tint removed — was forcing saffron over the architecture

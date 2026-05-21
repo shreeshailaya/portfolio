@@ -23,9 +23,9 @@ export function CosmicAwakening() {
   const group = useRef<THREE.Group>(null);
   const { smoothRef } = useScrollProgress();
 
-  // Distant stars
+  // Distant stars — static, never re-uploaded
   const stars = useMemo(() => {
-    const n = 900;
+    const n = 350;
     const a = new Float32Array(n * 3);
     for (let i = 0; i < n; i++) {
       const r = 90 + Math.random() * 60;
@@ -40,29 +40,17 @@ export function CosmicAwakening() {
 
   useFrame((state) => {
     const t = smoothRef.current;
-    const local = SCENE.local(t);
     if (!group.current) return;
 
-    // Visible mostly during this scene; fade out as we move to scene 2
-    const visibility = THREE.MathUtils.clamp(1 - Math.max(0, t - SCENE.end) * 8, 0, 1);
-    group.current.traverse((obj) => {
-      if (
-        (obj as THREE.Mesh).material &&
-        !Array.isArray((obj as THREE.Mesh).material)
-      ) {
-        const m = (obj as THREE.Mesh).material as THREE.Material & {
-          opacity?: number;
-          transparent?: boolean;
-        };
-        if (m.transparent && typeof m.opacity === "number") {
-          const base = (m.userData?.baseOpacity as number) ?? m.opacity;
-          if (m.userData) m.userData.baseOpacity = base;
-          m.opacity = base * visibility;
-        }
-      }
-    });
+    // Cosmic spans the page start so its inFade is implicit (we just
+    // begin visible). Fade out over a 0.08 window past scene end.
+    const outFade = Math.min(1, Math.max(0, 1 - (t - SCENE.end) / 0.08));
+    group.current.visible = outFade > 0.005;
+    // Off-screen short-circuit.
+    if (!group.current.visible) return;
 
-    // Slight scroll-driven lift on the orb
+    // Cheap orb lift — single object lookup, no full-graph traverse.
+    const local = SCENE.local(t);
     const orb = group.current.getObjectByName("hero-orb");
     if (orb) {
       orb.position.y = 7.5 + local * 1.4;
@@ -137,37 +125,8 @@ export function CosmicAwakening() {
         <NeuralOrb scale={2.4} intensity={1.2} />
       </group>
 
-      {/* Meditating monk silhouette — Character slot replaces this when set */}
-      <Character slot="cosmic.character" animation="yatri.meditate">
-        <group position={[0, 0.4, 3]}>
-          {/* base mat / aura ring */}
-          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0]}>
-            <ringGeometry args={[0.85, 1.1, 64]} />
-            <meshBasicMaterial
-              color="#FF8A1F"
-              transparent
-              opacity={0.45}
-              side={THREE.DoubleSide}
-              toneMapped={false}
-            />
-          </mesh>
-          {/* body — cone */}
-          <mesh position={[0, 0.6, 0]}>
-            <coneGeometry args={[0.5, 1.2, 16]} />
-            <meshStandardMaterial color="#0F1438" emissive="#1A2050" />
-          </mesh>
-          {/* head — sphere */}
-          <mesh position={[0, 1.4, 0]}>
-            <sphereGeometry args={[0.22, 32, 32]} />
-            <meshStandardMaterial color="#0F1438" emissive="#2A3270" />
-          </mesh>
-          {/* wrist device — small glowing cube */}
-          <mesh position={[0.4, 0.7, 0]}>
-            <boxGeometry args={[0.1, 0.04, 0.04]} />
-            <meshBasicMaterial color="#36F5FF" toneMapped={false} />
-          </mesh>
-        </group>
-      </Character>
+      {/* Yatri monk — driven by cosmic.character GLB */}
+      <Character slot="cosmic.character" animation="yatri.meditate" />
 
       {/* Volumetric light shaft pouring from the orb down onto the plateau */}
       <LightShafts
